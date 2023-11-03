@@ -2,7 +2,7 @@
 
 class Engine {
 	bool        isWork   =   false;
-	void 		Init()            			{    initscr(); noecho(); raw();       }
+	void 		Init()            			{    initscr(); noecho();              }
 public:
 	Engine()                      			{    Init(); isWork = true;            }
 	Engine( void func() )         			{    Init(); func(); isWork = true;    }
@@ -10,8 +10,8 @@ public:
 	void        FunctionGame( void func() )	{    func();                           }
 	bool 		IsOpen()					{    return isWork;                    }
 
-	void 		CursorInVisible() 			{    curs_set(0);                      }
-	void        CursorVisible()   			{    curs_set(1);                      }
+	void 		CursorInVisible() 			{    curs_set( 0 );                    }
+	void        CursorVisible()   			{    curs_set( 1 );                    }
 	void        ScreenClear()     			{    clear();                          }
 	void 		ScreenDraw()				{    refresh();                        }
 	void 		ReadAllPressed()			{    raw();                            }

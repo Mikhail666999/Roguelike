@@ -9,7 +9,7 @@ void GameLoop()
 {
 	Config::roguelike_command = true;
 	engine.CursorInVisible();
-	engine.ReadAllPressed();
+	// engine.ReadAllPressed();
 
 	player.Fill( 10, 10, '@', 20 );
 
