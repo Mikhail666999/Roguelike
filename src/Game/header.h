@@ -1,2 +1,2 @@
-#include "OOP/Position.hpp"
-#include "Entity/Entity.hpp"
+#include "OOP/Position.cpp"
+#include "Entity/Entity.cpp"
