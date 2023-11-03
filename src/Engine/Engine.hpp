@@ -23,7 +23,6 @@ public:
 	void        MvPrint( int x, int y, string text )
 											{    mvprintw( y, x, text.c_str() );   }
 	void        Close()                     {    endwin(); isWork = false;         }
-	void 		UpdateConfig()				{    keyboard();                       }
 
 	~Engine() 								{    Close();                          }
 
