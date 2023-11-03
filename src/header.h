@@ -4,6 +4,6 @@
 using namespace std;
 
 #include "Game/config.h"
-#include "Engine/Engine.hpp"
+#include "Engine/Engine.cpp"
 #include "Game/header.h"
 
