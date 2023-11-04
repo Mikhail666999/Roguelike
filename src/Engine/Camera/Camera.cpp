@@ -10,10 +10,10 @@ public:
 	int 		height;
 
 	Camera();
-	Camera( int px, int py, int xx, int yy, int w, int h );
+	Camera( int px, int py, int w, int h );
 
 	void 		SetFactorXY( int x, int y );
-	void 		Fill( int px, int py, int xx, int yy, int w, int h );
+	void 		Fill( int px, int py, int w, int h );
 	void 		Draw( Engine &engine, Map &map );
 };
 
@@ -27,22 +27,22 @@ Camera::Camera()
 	height = 30;
 }
 
-Camera::Camera( int px, int py, int xx, int yy, int w, int h ) 
+Camera::Camera( int px, int py, int w, int h ) 
 {
 	position.x = px;
 	position.y = py;
-	fx = xx;
-	fy = yy;
+	fx = 0;
+	fy = 0;
 	width = w;
 	height = h;
 }
 
-void Camera::Fill( int px, int py, int xx, int yy, int w, int h ) 
+void Camera::Fill( int px, int py, int w, int h ) 
 {
 	position.x = px;
 	position.y = py;
-	fx = xx;
-	fy = yy;
+	fx = 0;
+	fy = 0;
 	width = w;
 	height = h;
 }
@@ -59,18 +59,10 @@ void Camera::Draw( Engine &engine, Map &map )
 		{
 			xx = x + fx;
 			yy = y + fy;
-			if ( xx > 0 && xx < MAP_SIZE && yy > 0 && yy < MAP_SIZE )
-				engine.MvAddChar( x + position.x, y + position.y, map.place[x + fx][y + fy][MAP_PLACE_WALLS] );
+			if ( map.IsMap( xx, yy ) )
+				engine.MvAddChar( x + position.x, y + position.y, map.place[xx][yy][MAP_PLACE_WALLS] );
 			else  
 				engine.MvAddChar( x + position.x, y + position.y, ' ' );
-			// if ( xx > 0 && xx < MAP_SIZE ) {
-			// 	if (yy > 0 && yy < MAP_SIZE ) {
-			// 		engine.MvAddChar( x + position.x, y + position.y, map.place[x + fx][y + fy][MAP_PLACE_WALLS] );
-			// 	}
-			// }
-			// else { 
-			// 	engine.MvAddChar( x + position.x, y + position.y, ' ' );
-			// }
 		}
 	}
 
@@ -81,9 +73,9 @@ void Camera::Draw( Engine &engine, Map &map )
 		{
 			xx = x + fx;
 			yy = y + fy;
-			if (  map.place[x + fx][y + fy][MAP_PLACE_CHARACTERS] != ' ' ) 
-				if ( xx > 0 && xx < MAP_SIZE && yy > 0 && yy < MAP_SIZE )
-					engine.MvAddChar( x + position.x, y + position.y, map.place[x + fx][y + fy][MAP_PLACE_CHARACTERS] );
+			if ( map.place[xx][yy][MAP_PLACE_CHARACTERS] != ' ' ) 
+				if ( map.IsMap( xx, yy ) )
+					engine.MvAddChar( x + position.x, y + position.y, map.place[xx][yy][MAP_PLACE_CHARACTERS] );
 		}
 	}
 }

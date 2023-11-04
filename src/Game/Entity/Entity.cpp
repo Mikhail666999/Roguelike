@@ -6,6 +6,7 @@ class Entity {
 public:
 	Position 	position;
 
+	string 		name;
 	int 		health;
 	int 		mana;
 	int 		speed = 1;
@@ -22,4 +23,6 @@ public:
 	void 		MoveRight()				{    position.x += speed;                                            }
 	void 		MoveForward()			{    position.y -= speed;                                            }
 	void 		MoveBackward()			{    position.y += speed;                                            }
+
+	void 		SetName( string n ) 	{    name = n; 														 }
 };

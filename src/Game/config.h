@@ -1,9 +1,11 @@
 namespace Config {
 	bool roguelike_command	= false;
+	bool debug 				= false;
 
 	enum class PublicKey {
 		Back 		= 27,	// escape
-		Set 		= '0', 	// '0'
+		SetInput	= '0', 	// '0' изменение управления с hjkl на 8246 (keypad)
+		SetSpeed	= '9',	// '9' изменение скорости игрока
 	};
 
 	enum class RoguelikeKey {
@@ -31,7 +33,12 @@ namespace Config {
 }
 
 #define MAP_SIZE 				1024
+
 #define MAP_PLACE_CHARACTERS 	0
 #define MAP_PLACE_WALLS 		1
 #define MAP_PLACE_ITEMS 		2
+
 #define MAP_CHARACTERS_MAX 		2048
+
+
+#define str(x) to_string( x )

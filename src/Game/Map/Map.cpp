@@ -13,6 +13,7 @@ public:
 	void 		WallsAddRoom( char s1, char s2, int x, int y, int w, int h, int thickness );
 	void 		WallsFillSquare( char s, int x, int y, int w, int h );
 	void 		CharacterFill( char s );
+	bool 		IsMap( int x, int y );
 };
 
 Map::Map()
@@ -63,4 +64,9 @@ void Map::WallsFillSquare( char s, int xx, int yy, int w, int h )
 			place[x][y][MAP_PLACE_WALLS] = s;
 		}
 	}
+}
+
+bool Map::IsMap( int x, int y ) 
+{
+	return ( x >= 0 && x < MAP_SIZE && y >= 0 && y < MAP_SIZE );
 }

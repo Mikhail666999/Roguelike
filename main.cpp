@@ -7,54 +7,62 @@ Entity	player;
 Map 	map;
 Camera 	camera;
 
+int key = 0;
+
+void UI()
+{
+	
+	// string s = ;
+	engine.MvPrint( 0, 5,( "code: \'" + str( key ) + "\'" ) );
+	if ( debug ) 
+	{
+		engine.MvPrint( 0, 0, ( "roguelike/keypad( 1 / 0 ): " + str( roguelike_command ) + "\n" ) );
+
+		engine.Print( "Player x = " + str( player.position.x ) + "\n" );
+		engine.Print( "Player y = " + str( player.position.y ) + "\n" );
+		engine.Print( "Player speed = " + str( player.speed ) );
+	}
+	else 
+	{
+		engine.MvPrint( 0, 0, "Name: " + player.name );
+	}
+}
+
 void GameLoop() 
 {
 	engine.CursorInVisible();
 
 	player.Fill( 16, 10, '@', 20 );
-	player.speed = 10;
 
 	map.WallsFill( '.' );
-	map.WallsAddRoom( '#', '.', 1, 1, 10, 6, 1 );
+	map.WallsAddRoom( '#', '.', 1, 1, 15, 6, 1 );
 
-	camera.Fill( 15, 2, 0, 0, 90, 30 );
+	camera.Fill( 20, 1, 90, 30 );
 
 	roguelike_command = true;
+	debug = true;
 
-	
-	int key;
 	while ( engine.IsOpen() ) 
 	{
 		// 	START DRAW
 		engine.ScreenClear();
-
+		
 		map.place[player.position.x][player.position.y][MAP_PLACE_CHARACTERS] = player.icon;
 
 		camera.fx = player.position.x - camera.width / 2;
 		camera.fy = player.position.y - camera.height / 2;
 
+		UI();
 		camera.Draw( engine, map );
-		
-		if ( Config::roguelike_command )
-			engine.MvPrint( 0, 1, "roguelike_command = true" );
-		else
-			engine.MvPrint( 0, 1, "roguelike_command = false" );
-
-		engine.MvPrint( 1, 0, ( "code: " + to_string( key ) + ",\t key: " + (char) key ).c_str() );
-		
-
-
 
 		engine.ScreenDraw();
 		map.place[player.position.x][player.position.y][MAP_PLACE_CHARACTERS] = ' ';
 		// 	END DRAW
 
-		
-
-		// START INPUT
+		// INPUT
 		key = engine.inp();
-		// camera.fx++;
-		// camera.fy++;
+
+		// Roguelike
 		if ( roguelike_command ) 
 		{
 			switch ( key ) 
@@ -97,7 +105,8 @@ void GameLoop()
 			}
 		} 
 
-		else 
+		// Keypad 
+		else
 		{
 			switch ( key ) 
 			{
@@ -139,9 +148,10 @@ void GameLoop()
 			}
 		} 
 
+		// Public
 		switch ( key ) 
 		{
-			case (int) PublicKey::Set:
+			case (int) PublicKey::SetInput:
 				if ( Config::roguelike_command )
 					Config::roguelike_command = false;
 				else
@@ -150,6 +160,13 @@ void GameLoop()
 
 			case (int) PublicKey::Back:
 				engine.Close();
+				break;
+
+			case (int) PublicKey::SetSpeed:
+				if ( player.speed < 10 ) 
+					player.speed++;
+				else 
+					player.speed = 1;
 				break;
 		}
 
