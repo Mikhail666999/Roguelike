@@ -2,39 +2,59 @@
 
 using namespace Config;
 
-Engine engine;
-Entity player;
+Engine 	engine;
+Entity	player;
+Map 	map;
+Camera 	camera;
 
 void GameLoop() 
 {
-	Config::roguelike_command = true;
 	engine.CursorInVisible();
-	// engine.ReadAllPressed();
 
-	player.Fill( 10, 10, '@', 20 );
+	player.Fill( 16, 10, '@', 20 );
+	player.speed = 10;
 
+	map.WallsFill( '.' );
+	map.WallsAddRoom( '#', '.', 1, 1, 10, 6, 1 );
+
+	camera.Fill( 15, 2, 0, 0, 90, 30 );
+
+	roguelike_command = true;
+
+	
 	int key;
 	while ( engine.IsOpen() ) 
 	{
 		// 	START DRAW
 		engine.ScreenClear();
 
-		engine.MvPrint( 0, 0, ( "code: " + to_string( key ) + ",\t key: " + (char) key ).c_str() );
-		engine.MvPrint( player.position.x, player.position.y, string(&player.icon, 1) );
+		map.place[player.position.x][player.position.y][MAP_PLACE_CHARACTERS] = player.icon;
 
+		camera.fx = player.position.x - camera.width / 2;
+		camera.fy = player.position.y - camera.height / 2;
+
+		camera.Draw( engine, map );
+		
 		if ( Config::roguelike_command )
 			engine.MvPrint( 0, 1, "roguelike_command = true" );
 		else
 			engine.MvPrint( 0, 1, "roguelike_command = false" );
 
+		engine.MvPrint( 1, 0, ( "code: " + to_string( key ) + ",\t key: " + (char) key ).c_str() );
+		
+
+
+
 		engine.ScreenDraw();
+		map.place[player.position.x][player.position.y][MAP_PLACE_CHARACTERS] = ' ';
 		// 	END DRAW
 
-
+		
 
 		// START INPUT
 		key = engine.inp();
-
+		// camera.fx++;
+		// camera.fy++;
 		if ( roguelike_command ) 
 		{
 			switch ( key ) 
@@ -132,6 +152,9 @@ void GameLoop()
 				engine.Close();
 				break;
 		}
+
+
+
 		// END INPUT
 	}
 }
@@ -140,4 +163,3 @@ int main() {
 	engine.FunctionGame( GameLoop );             
 	return 0;
 }
-
