@@ -1,5 +1,5 @@
 namespace Config {
-	bool roguelike_command = false;
+	bool roguelike_command	= false;
 
 	enum class PublicKey {
 		Back 		= 27,	// escape
@@ -29,3 +29,9 @@ namespace Config {
 		LBackward	= 49,	// 1
 	};
 }
+
+#define MAP_SIZE 				1024
+#define MAP_PLACE_CHARACTERS 	0
+#define MAP_PLACE_WALLS 		1
+#define MAP_PLACE_ITEMS 		2
+#define MAP_CHARACTERS_MAX 		2048
