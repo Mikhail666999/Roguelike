@@ -49,8 +49,15 @@ void GameLoop()
 		
 		map.place[player.position.x][player.position.y][MAP_PLACE_CHARACTERS] = player.icon;
 
-		camera.fx = player.position.x - camera.width / 2;
-		camera.fy = player.position.y - camera.height / 2;
+		if ( player.position.x >= camera.width/2 && player.position.x <= MAP_SIZE - camera.width/2 ) 
+		{
+			camera.fx = player.position.x - camera.width / 2;
+		}
+		if ( player.position.y >= camera.height/2 && player.position.y <= MAP_SIZE - camera.height/2 )
+		{
+			camera.fy = player.position.y - camera.height / 2;
+		}
+
 
 		UI();
 		camera.Draw( engine, map );
@@ -163,8 +170,8 @@ void GameLoop()
 				break;
 
 			case (int) PublicKey::SetSpeed:
-				if ( player.speed < 10 ) 
-					player.speed++;
+				if ( player.speed < 100 ) 
+					player.speed += 1;
 				else 
 					player.speed = 1;
 				break;
